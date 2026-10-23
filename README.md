@@ -1,127 +1,83 @@
 # Abhay Raj Yadav — Portfolio
 
-A premium, production-ready portfolio website built with **React + Vite + TailwindCSS**.
+A light, editorial personal site for Abhay Raj Yadav, a software engineer working across backend systems, full-stack products, and agentic AI.
 
-## 🚀 Quick Start
+Live locally at `http://localhost:5173` after you start the dev server. The production build is a static site and can be hosted on Vercel or Netlify.
 
-### Prerequisites
-- Node.js 18+ installed ([nodejs.org](https://nodejs.org))
-- VS Code
+## Stack
 
-### Installation
+- React 18
+- Vite
+- Tailwind CSS
+- Plus Jakarta Sans and JetBrains Mono
+
+There is no backend. Project, education, and contact content lives in one data file. The corner assistant answers from that same content. It does not call an external model and does not need an API key.
+
+## Run it
+
+Requirements: Node.js 18 or newer.
 
 ```bash
-# 1. Navigate to project folder
-cd abhay-portfolio
-
-# 2. Install dependencies
 npm install
-
-# 3. Start development server
 npm run dev
-
-# 4. Open in browser
-# → http://localhost:5173
 ```
 
-### Build for Production
-```bash
-npm run build       # Creates /dist folder
-npm run preview     # Preview the production build
-```
+Open [http://localhost:5173](http://localhost:5173).
 
----
-
-## 🖼️ Adding Your Profile Photo
-
-1. Get a photo of yourself (square or portrait works best)
-2. Rename it to **`profile.jpg`**
-3. Place it at: `src/assets/profile.jpg`
-4. Save and the dev server hot-reloads automatically
-
-**Supported formats:** `.jpg`, `.jpeg`, `.png`, `.webp`
-
-> If no image is found, the site shows an elegant placeholder automatically — no errors.
-
----
-
-## 📁 Project Structure
-
-```
-abhay-portfolio/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── assets/
-│   │   └── profile.jpg        ← Place your photo here
-│   ├── components/
-│   │   ├── Navbar.jsx         ← Fixed nav + dark/light toggle
-│   │   ├── Hero.jsx           ← Landing section with typewriter
-│   │   ├── About.jsx          ← Bio + achievements
-│   │   ├── Skills.jsx         ← Filterable skill cards
-│   │   ├── Projects.jsx       ← Project showcase cards
-│   │   ├── Experience.jsx     ← Timeline experience section
-│   │   ├── Education.jsx      ← Education cards
-│   │   ├── Contact.jsx        ← Contact form + links
-│   │   └── Footer.jsx
-│   ├── hooks/
-│   │   ├── useScrollAnimation.js   ← Intersection Observer animations
-│   │   └── useTheme.js             ← Dark/light mode persistence
-│   ├── utils/
-│   │   └── data.js            ← ★ All your resume data lives here
-│   ├── styles/
-│   │   └── index.css          ← Global styles + Tailwind
-│   ├── App.jsx
-│   └── main.jsx
-├── index.html                 ← SEO meta tags
-├── vite.config.js
-├── tailwind.config.js
-└── package.json
-```
-
----
-
-## ✏️ Customization
-
-All personal data is centralized in **`src/utils/data.js`**:
-- Update `personal` object with your real LinkedIn/GitHub URLs
-- Add/remove projects in the `projects` array
-- Modify skills categories as needed
-
----
-
-## 🎨 Design System
-
-- **Fonts:** Syne (display) + DM Sans (body) + JetBrains Mono (code)
-- **Primary color:** `#00E5FF` (cyan accent)
-- **Theme:** Dark-first with light mode toggle
-- **Animations:** CSS scroll-triggered reveals with stagger
-
----
-
-## 🌐 Deployment
-
-**Vercel (recommended):**
-```bash
-npm install -g vercel
-vercel
-```
-
-**Netlify:**
 ```bash
 npm run build
-# Drag & drop the /dist folder to netlify.com/drop
+npm run preview
 ```
 
----
+`npm run build` writes the static site to `dist/`.
 
-## 📦 Dependencies
+## What’s on the page
 
-| Package | Purpose |
-|---|---|
-| react, react-dom | Core framework |
-| react-scroll | Smooth section navigation |
-| react-icons | Icon library |
-| framer-motion | (Available for advanced animations) |
-| tailwindcss | Utility-first CSS |
-| vite | Lightning-fast dev server |
+- About, experience, projects, skills, education, and achievements
+- Contact links for email, phone, LinkedIn, and GitHub
+- A resume button that opens `public/Abhay-Raj-Yadav-Resume.pdf`
+- A portfolio assistant fixed to the bottom-right corner
+
+The assistant matches questions against the portfolio data. It covers studies, the Micromatic internship, Niriksha, PDF-Summary AI, DemandRadar, skills, and contact details. If a question is not in that material, it says so.
+
+## Project structure
+
+```
+src/
+├── assets/profile.jpg          Portrait used in the hero
+├── components/
+│   ├── Navbar.jsx
+│   ├── Hero.jsx
+│   ├── About.jsx
+│   ├── Experience.jsx
+│   ├── Projects.jsx
+│   ├── Skills.jsx
+│   ├── Education.jsx
+│   ├── Achievements.jsx
+│   ├── Contact.jsx
+│   ├── Footer.jsx
+│   └── chat/ChatWidget.jsx    Floating assistant UI
+├── utils/
+│   ├── data.js                 Resume content for the page
+│   └── assistant.js            Local question matching
+├── hooks/useScrollAnimation.js
+├── styles/index.css
+├── App.jsx
+└── main.jsx
+```
+
+## Update the content
+
+Edit `src/utils/data.js` for name, links, projects, skills, education, and achievements. The assistant reads that file, so those answers stay in step with the page.
+
+Replace `src/assets/profile.jpg` to change the portrait. Replace `public/Abhay-Raj-Yadav-Resume.pdf` to change the file opened by the Resume button.
+
+## Design notes
+
+The site is light only: warm off-white background (`#FAF9F6`), white cards, pastel blue (`#8CB9D8`), and sage (`#B8CDBB`). Body text is Plus Jakarta Sans. Dates and technical labels use JetBrains Mono.
+
+## Deploy
+
+**Vercel:** import this repository and use the default Vite settings (`npm run build`, output `dist`).
+
+**Netlify:** build command `npm run build`, publish directory `dist`.

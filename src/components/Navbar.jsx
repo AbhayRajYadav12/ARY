@@ -1,117 +1,119 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-scroll'
-import { useTheme } from '../hooks/useTheme'
+import { FiMenu, FiX } from 'react-icons/fi'
+import { personal } from '../utils/data'
 
-const navLinks = ['About', 'Skills', 'Projects', 'Experience', 'Education', 'Contact']
+const navLinks = [
+  { label: 'About', to: 'about' },
+  { label: 'Experience', to: 'experience' },
+  { label: 'Projects', to: 'projects' },
+  { label: 'Skills', to: 'skills' },
+  { label: 'Education', to: 'education' },
+  { label: 'Achievements', to: 'achievements' },
+  { label: 'Contact', to: 'contact' },
+]
+
+const linkClass =
+  'nav-link cursor-pointer rounded-full px-2.5 py-1.5 text-[13px] text-ink-muted transition duration-200 hover:bg-hover hover:text-ink'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const onKey = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
+
+  const closeMenu = () => setMenuOpen(false)
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-surface-dark/90 backdrop-blur-xl border-b border-surface-border shadow-lg shadow-black/20'
-          : 'bg-transparent'
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-paper/95 backdrop-blur-md transition duration-200 ${
+        scrolled ? 'border-line shadow-card' : 'border-transparent'
       }`}
     >
-      <div className="section-container flex items-center justify-between h-16">
-        {/* Logo */}
-        <Link to="hero" smooth duration={600} className="cursor-pointer">
-          <span className="font-display font-bold text-xl text-white">
-            AR<span className="text-accent">Y</span>
+      <a
+        href="#about"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-card focus:px-3 focus:py-2"
+      >
+        Skip to content
+      </a>
+      <div className="section-container flex h-16 items-center justify-between gap-4">
+        <Link to="hero" smooth duration={500} offset={-64} className="cursor-pointer shrink-0" onClick={closeMenu}>
+          <span className="text-lg font-semibold tracking-tight text-ink">
+            AR<span className="text-blue-link">Y</span>
           </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <li key={link}>
-              <Link
-                to={link.toLowerCase()}
-                smooth
-                duration={600}
-                offset={-64}
-                className="text-slate-400 hover:text-accent font-body text-sm px-3 py-2 rounded-lg 
-                           hover:bg-accent/5 transition-all duration-200 cursor-pointer"
-                activeClass="text-accent"
-                spy
-              >
-                {link}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Right side */}
-        <div className="flex items-center gap-3">
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="w-9 h-9 rounded-xl border border-surface-border bg-surface-card 
-                       flex items-center justify-center text-slate-400 hover:text-accent 
-                       hover:border-accent/40 transition-all duration-200"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                />
-              </svg>
-            ) : (
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                />
-              </svg>
-            )}
-          </button>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-9 h-9 rounded-xl border border-surface-border bg-surface-card 
-                       flex flex-col items-center justify-center gap-1.5 transition-all"
-            aria-label="Menu"
-          >
-            <span className={`w-4 h-0.5 bg-slate-400 transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`w-4 h-0.5 bg-slate-400 transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`w-4 h-0.5 bg-slate-400 transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-surface-dark/95 backdrop-blur-xl border-b border-surface-border">
-          <ul className="section-container py-4 flex flex-col gap-1">
+        <nav className="hidden lg:block" aria-label="Primary">
+          <ul className="flex items-center gap-0.5">
             {navLinks.map((link) => (
-              <li key={link}>
+              <li key={link.to}>
                 <Link
-                  to={link.toLowerCase()}
+                  to={link.to}
                   smooth
-                  duration={600}
-                  offset={-64}
-                  onClick={() => setMenuOpen(false)}
-                  className="block text-slate-300 hover:text-accent font-body px-4 py-2.5 
-                             rounded-lg hover:bg-accent/5 transition-all cursor-pointer"
+                  spy
+                  duration={500}
+                  offset={-72}
+                  className={linkClass}
+                  activeClass="!text-ink bg-hover"
                 >
-                  {link}
+                  {link.label}
                 </Link>
               </li>
             ))}
           </ul>
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <a href={personal.resume} target="_blank" rel="noopener noreferrer" className="btn-primary !px-4 !py-2 text-[13px]">
+            Resume
+          </a>
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-card text-ink lg:hidden"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <FiX aria-hidden="true" /> : <FiMenu aria-hidden="true" />}
+          </button>
         </div>
+      </div>
+
+      {menuOpen && (
+        <nav id="mobile-nav" className="border-t border-line bg-paper lg:hidden" aria-label="Mobile">
+          <ul className="section-container flex flex-col gap-1 py-3">
+            {navLinks.map((link) => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  smooth
+                  duration={500}
+                  offset={-72}
+                  onClick={closeMenu}
+                  className="block cursor-pointer rounded-xl px-3 py-2.5 text-sm text-ink hover:bg-hover"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       )}
-    </nav>
+    </header>
   )
 }

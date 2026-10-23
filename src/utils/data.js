@@ -1,92 +1,139 @@
 export const personal = {
   name: 'Abhay Raj Yadav',
-  tagline: 'AI/ML Engineer & Full-Stack Developer',
-  summary:
-    'Computer Science student with specialized AI/ML training from IIT Ropar, combining cloud-native development expertise with data engineering and machine learning capabilities. Passionate about delivering measurable business impact through AI-driven decision intelligence.',
+  role: 'Software Engineer',
+  positioning: 'Backend & full-stack development · Agentic AI',
   email: '19abhay26@gmail.com',
-  phone: '+91-9305307896',
-  location: 'Bengaluru, Karnataka',
-  linkedin: 'https://linkedin.com',
-  github: 'https://github.com',
-  leetcode: 'https://leetcode.com/ABHAYRAJY',
-  // Profile image: place your photo at src/assets/profile.jpg
-  // The component will use this path automatically
+  phone: '+91 93530 78969',
+  phoneHref: 'tel:+919353078969',
+  location: 'Bengaluru, Karnataka, India',
+  linkedin: 'https://linkedin.com/in/contactabhayraj',
+  linkedinLabel: 'linkedin.com/in/contactabhayraj',
+  github: 'https://github.com/ABHAYRAJYADAV19',
+  githubLabel: 'github.com/ABHAYRAJYADAV19',
+  resume: '/Abhay-Raj-Yadav-Resume.pdf',
+  intro:
+    'Hi, I’m Abhay — a software developer who enjoys turning complex problems into thoughtful, reliable software. I work across backend systems, AI-powered applications, and full-stack products, with a particular interest in building things that are genuinely useful.',
+  about: [
+    'I’m a Computer Science and Design student at Atria Institute of Technology, with a minor in Artificial Intelligence from IIT Ropar. My CGPA is 8.85/10, and I graduate in 2027.',
+    'Most of my work sits in backend APIs, agentic systems, and retrieval-augmented generation, alongside full-stack products. Lately that has also meant industrial software: real-time measurement data, human-machine interfaces, and access control for tools used on the shop floor.',
+  ],
 }
 
-export const skills = {
-  Languages: ['Python', 'SQL', 'JavaScript', 'C++', 'PHP', 'HTML/CSS'],
-  'Frameworks & Libraries': ['React.js', 'Node.js', 'Flask', 'Django', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'PySpark'],
-  'Databases & Cloud': ['MongoDB', 'MySQL', 'PostgreSQL', 'AWS', 'Cloud Data Warehousing'],
-  'AI/ML & Analytics': ['Machine Learning', 'Deep Learning', 'LLMs', 'RAG Systems', 'NLP', 'Computer Vision', 'Predictive Analytics'],
-  'DevOps & Tools': ['Git', 'Linux', 'REST APIs', 'CI/CD Pipelines', 'Microservices', 'Agile/Scrum'],
-}
+export const skills = [
+  {
+    title: 'Programming languages',
+    items: ['Java', 'Python', 'JavaScript', 'TypeScript', 'C++', 'C', 'SQL', 'HTML', 'CSS'],
+  },
+  {
+    title: 'AI / ML and agentic systems',
+    items: [
+      'LLM integration',
+      'Llama 3.3',
+      'Gemini API',
+      'LangChain',
+      'Retrieval-augmented generation',
+      'Model Context Protocol',
+      'Multi-agent workflows',
+      'Tool and function calling',
+    ],
+  },
+  {
+    title: 'Backend and APIs',
+    items: ['Node.js', 'Express.js', 'FastAPI', 'Flask', 'Django', 'REST API design', 'Microservices'],
+  },
+  {
+    title: 'Frontend',
+    items: ['React.js', 'Next.js'],
+  },
+  {
+    title: 'Databases',
+    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Qdrant'],
+  },
+  {
+    title: 'Cloud and tools',
+    items: ['Google Cloud', 'AWS', 'Docker', 'Git/GitHub', 'GitHub Actions', 'Linux CLI'],
+  },
+  {
+    title: 'Computer science',
+    items: [
+      'Data structures and algorithms',
+      'OOP',
+      'Design patterns',
+      'DBMS',
+      'Operating systems',
+      'Computer networking',
+    ],
+  },
+]
 
 export const experience = [
   {
     role: 'Software Development Intern',
-    company: 'Edunet Foundation',
-    period: 'Oct 2024 – Nov 2024',
-    type: 'Remote',
+    company: 'Micromatic Grinding Technologies',
+    location: 'Bengaluru',
+    period: 'Sep 2026 – Mar 2027',
     highlights: [
-      'Engineered Python automation scripts for data pipeline optimization, reducing manual processing time by 50+ hours/week',
-      'Optimized SQL queries and backend microservices, improving data processing efficiency by 25% for production workloads',
-      'Developed and deployed RESTful APIs for enterprise client applications with focus on scalability and performance',
-      'Implemented Git-based CI/CD workflows and code review processes, enhancing team collaboration and delivery velocity',
+      'Developed an RS232 serial communication module for Statistical Process Control software to acquire and process real-time measurement data from industrial machines and instruments.',
+      'Designed and built an HMI for a 26-inch display, with an on-screen keyboard and operating modes including Auto and Manual.',
+      'Implemented role-based access control for OEM, Admin, Supervisor, and Operator roles.',
+      'Collaborated with the engineering team on production software for precision grinding machines.',
     ],
+    tags: ['RS232', 'HMI', 'RBAC', 'SPC'],
   },
 ]
 
 export const projects = [
   {
     name: 'Niriksha',
-    subtitle: 'Agentic AI Honeypot & Threat Intelligence',
-    description:
-      'Automated defense system using LLMs to simulate human personas and proactively engage scammers. Engineered regex-based extraction engine capturing UPI IDs, bank accounts, phishing links from live conversations with 100% accuracy.',
-    stack: ['Llama 3.3', 'Groq API', 'FastAPI', 'Python'],
-    year: '2026',
-    metrics: ['100% extraction accuracy', '15+ fraud scenarios', '30s timeout maintained'],
-    highlight: true,
+    purpose: 'Agentic AI honeypot and threat intelligence platform.',
+    summary:
+      'A multi-agent Python backend that coordinates an LLM with tool calls and rule-based escalation across live fraud scenarios.',
+    period: 'Jan 2026 – Present',
+    stack: ['Python', 'FastAPI', 'Llama 3.3', 'Groq API', 'Docker'],
+    diagram: 'niriksha',
+    details: [
+      'Coordinates Llama 3.3 through the Groq API with tool calls and rule-based escalation, covering 15+ live fraud scenarios end to end.',
+      'A regex extraction step in the agent pipeline pulls UPI IDs, bank accounts, and phishing URLs. The resume reports 100% parsing accuracy across the cases tested.',
+      'Async REST APIs include error handling and retry logic. The resume reports a 100% request success rate within a 30-second SLA.',
+    ],
+  },
+  {
+    name: 'PDF-Summary AI',
+    purpose: 'Enterprise RAG document intelligence platform.',
+    summary:
+      'An ingestion and retrieval service that answers questions over documents with citations tied back to a page.',
+    period: '2026',
+    stack: ['Node.js', 'Express', 'TypeScript', 'Redis', 'BullMQ', 'MongoDB', 'Qdrant', 'Gemini API'],
+    diagram: 'pdf',
+    details: [
+      'An async pipeline parses, chunks, embeds, and indexes documents in Qdrant, then supports conversational Q&A with citation-backed, page-referenced answers.',
+      'Hybrid retrieval, reranking, and a similarity threshold keep answers grounded and reduce unsupported responses.',
+      'Server-Sent Events stream replies. The service is structured as a reusable module rather than a one-off script.',
+    ],
   },
   {
     name: 'DemandRadar',
-    subtitle: 'Cloud-Native Analytics Platform',
-    description:
-      'End-to-end cloud-native analytics platform with real-time demand forecasting and business intelligence capabilities. Scalable microservices-based REST APIs handling 1000+ concurrent requests with 99% uptime SLA.',
-    stack: ['Python', 'React.js', 'MongoDB', 'Flask'],
-    year: '2024',
-    metrics: ['1000+ concurrent requests', '99% uptime SLA', '40% faster decisions'],
-    highlight: true,
-  },
-  {
-    name: 'ShaktiGrid',
-    subtitle: 'IoT Microgrid Monitoring System',
-    description:
-      'Cloud-agnostic microgrid monitoring system with real-time data pipelines processing 10,000+ sensor readings per minute. ML-based predictive maintenance models reducing operational downtime by 30%.',
-    stack: ['Python', 'IoT', 'Flask', 'PostgreSQL', 'ML Analytics'],
-    year: '2025',
-    metrics: ['10K+ readings/min', '99.5% accuracy', '30% less downtime'],
-    highlight: false,
-  },
-  {
-    name: 'Price Gap Analysis',
-    subtitle: 'Analytics Consulting Dashboard',
-    description:
-      'Full-stack analytical platform computing real-time price variance analytics between seller-listed and customer-paid transactions. ML-driven computation logic delivering actionable pricing insights.',
-    stack: ['Python', 'Flask', 'JavaScript', 'SQL', 'MongoDB'],
-    year: '2024',
-    metrics: ['Real-time analytics', 'Revenue optimization', 'Anomaly detection'],
-    highlight: false,
+    purpose: 'Analytics and demand forecasting platform.',
+    summary:
+      'A full-stack analytics product with a React frontend and a Python/Flask API backed by MongoDB.',
+    period: 'Jan 2024 – May 2024',
+    stack: ['Python', 'React.js', 'Flask', 'MongoDB', 'REST APIs'],
+    diagram: 'demand',
+    details: [
+      'The Flask REST API is reported to handle 1,000+ concurrent requests at 99% uptime.',
+      'Delivered with a four-person team using Agile/Scrum. Caching was added so queries stayed responsive under load.',
+    ],
   },
 ]
 
 export const education = [
   {
-    degree: 'Bachelor of Engineering in Computer Science and Design',
+    degree: 'B.E. in Computer Science and Design',
     institution: 'Atria Institute of Technology',
     location: 'Bengaluru, Karnataka',
     period: 'Sep 2023 – Sep 2027',
-    gpa: '8.85/10.0',
-    courses: ['Data Structures', 'Algorithms', 'DBMS', 'Software Engineering', 'Data Analytics'],
+    gpa: 'CGPA 8.85/10.0',
+    courses: ['DSA', 'OOP and design patterns', 'DBMS', 'Operating systems', 'Computer networks', 'Software engineering'],
   },
   {
     degree: 'Minor in Artificial Intelligence',
@@ -94,13 +141,32 @@ export const education = [
     location: 'Punjab, India',
     period: 'Sep 2024 – Sep 2025',
     gpa: null,
-    courses: ['Neural Networks', 'LLMs', 'Computer Vision', 'NLP', 'Prompt Engineering', 'Generative AI'],
+    courses: ['Neural networks', 'LLMs', 'Computer vision', 'NLP', 'Prompt engineering', 'Generative AI'],
   },
 ]
 
 export const achievements = [
-  { icon: '🏆', title: 'Top 2% Globally', desc: 'AI Impact Summit BuildAthon 2026' },
-  { icon: '📝', title: 'Published Research', desc: 'AI-powered energy management systems (ShaktiGrid)' },
-  { icon: '👥', title: 'Team Lead', desc: 'Led 4-member cross-functional team for DemandRadar' },
-  { icon: '⭐', title: '50+ Contributions', desc: 'Active open-source contributor in data science & ML' },
+  {
+    title: 'Top 2% globally',
+    detail: 'AI Impact Summit BuildAthon 2026, an international product engineering competition.',
+  },
+  {
+    title: '2nd Runner-Up',
+    detail: 'Inter-College Ideathon.',
+  },
+  {
+    title: 'Certifications',
+    detail: 'Certificates I’ve completed.',
+    items: [
+      'AWS Cloud Practitioner',
+      'Network Fundamentals',
+      'Programming in C',
+      'Python Design Patterns',
+      'Cybersecurity MOOC (CySecK)',
+    ],
+  },
+  {
+    title: '50+ GitHub contributions',
+    detail: 'Across Python, data science, and machine learning repositories.',
+  },
 ]

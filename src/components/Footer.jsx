@@ -1,20 +1,35 @@
 import { personal } from '../utils/data'
 
 export default function Footer() {
-  const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-surface-border py-8">
-      <div className="section-container flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="font-mono text-xs text-slate-600">
-          © {year} <span className="text-slate-400">Abhay Raj Yadav</span>. Built with React + Vite + TailwindCSS
+    <footer className="border-t border-line pb-28 pt-8">
+      <div className="section-container flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-ink">
+          {personal.name}
+          <span className="mt-1 block text-ink-muted sm:mt-0 sm:ml-2 sm:inline">{personal.location}</span>
         </p>
-        <div className="flex items-center gap-1 font-mono text-xs text-slate-600">
-          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          <span>Open to opportunities</span>
-        </div>
-        <p className="font-mono text-xs text-slate-600">
-          {personal.location}
-        </p>
+        <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+          <li>
+            <a href={`mailto:${personal.email}`} className="text-ink-muted hover:text-blue-link">
+              Email
+            </a>
+          </li>
+          <li>
+            <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="text-ink-muted hover:text-blue-link">
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={personal.github} target="_blank" rel="noopener noreferrer" className="text-ink-muted hover:text-blue-link">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href={personal.resume} target="_blank" rel="noopener noreferrer" className="text-ink-muted hover:text-blue-link">
+              Resume
+            </a>
+          </li>
+        </ul>
       </div>
     </footer>
   )
