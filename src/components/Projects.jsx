@@ -113,13 +113,33 @@ function ProjectCard({ project }) {
         </button>
         <div className={`grid transition-[grid-template-rows] duration-200 ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
           <div id={panelId} className="overflow-hidden" aria-hidden={!open}>
-            <ul className="space-y-2 pt-3">
-              {project.details.map((item) => (
-                <li key={item} className="text-sm leading-relaxed text-ink-muted">
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="space-y-4 pt-4">
+              {project.caseStudy && (
+                <>
+                  <div>
+                    <h4 className="text-sm font-semibold text-ink">Problem</h4>
+                    <p className="mt-1 text-sm leading-relaxed text-ink-muted">{project.caseStudy.problem}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-ink">Approach</h4>
+                    <p className="mt-1 text-sm leading-relaxed text-ink-muted">{project.caseStudy.approach}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-ink">What the resume reports</h4>
+                    <ul className="mt-1 space-y-2">
+                      {project.caseStudy.results.map((item) => (
+                        <li key={item} className="text-sm leading-relaxed text-ink-muted">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              )}
+              <p className="text-xs leading-relaxed text-ink-muted">
+                No public repository or live demo is listed for this project, so those links are omitted.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -131,14 +151,14 @@ export default function Projects() {
   const ref = useScrollAnimation()
 
   return (
-    <section id="projects" className="scroll-mt-20 py-20 md:py-28">
+    <section id="projects" className="scroll-mt-20 page-section">
       <div className="section-container" ref={ref}>
         <p className="section-kicker animate-on-scroll">Projects</p>
         <h2 className="section-title max-w-2xl animate-on-scroll">Work I’m glad to explain.</h2>
         <p className="mt-4 max-w-2xl animate-on-scroll text-base leading-relaxed text-ink-muted">
           Three projects from the resume. Each drawing shows how the system is arranged. These are diagrams, not screenshots.
         </p>
-        <div className="mt-10 grid items-start gap-5 lg:grid-cols-3 stagger">
+        <div className="mt-10 grid items-start gap-5 lg:grid-cols-2 stagger">
           {projects.map((project) => (
             <div key={project.name} className="animate-on-scroll h-full">
               <ProjectCard project={project} />

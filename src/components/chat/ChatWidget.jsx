@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { FiMessageCircle, FiSend, FiX } from 'react-icons/fi'
+import { FiMessageCircle, FiRotateCcw, FiSend, FiX } from 'react-icons/fi'
 import { GREETING, QUICK_PROMPTS, answerQuestion } from '../../utils/assistant'
 
 const MAX_LENGTH = 500
@@ -27,7 +27,7 @@ function Suggestions({ prompts, onPick }) {
   )
 }
 
-function MessageList({ messages, onPick, onRetry, scrollerRef, onScroll }) {
+function MessageList({ messages, pending, onPick, onRetry, scrollerRef, onScroll }) {
   return (
     <div ref={scrollerRef} onScroll={onScroll} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
       {messages.map((message, index) => {
@@ -53,6 +53,11 @@ function MessageList({ messages, onPick, onRetry, scrollerRef, onScroll }) {
           </div>
         )
       })}
+      {pending && (
+        <p className="text-xs text-ink-muted" role="status">
+          Looking through the portfolio…
+        </p>
+      )}
     </div>
   )
 }
@@ -63,7 +68,9 @@ export default function ChatWidget() {
   const inputRef = useRef(null)
   const scrollerRef = useRef(null)
   const stickToEnd = useRef(true)
+  const requestRef = useRef(0)
   const [open, setOpen] = useState(false)
+  const [pending, setPending] = useState(false)
   const [draft, setDraft] = useState('')
   const [hint, setHint] = useState('')
   const [messages, setMessages] = useState(() => [
@@ -87,7 +94,7 @@ export default function ChatWidget() {
     const scroller = scrollerRef.current
     if (!open || !scroller || !stickToEnd.current) return
     scroller.scrollTop = scroller.scrollHeight
-  }, [messages, open])
+  }, [messages, open, pending])
 
   useEffect(() => {
     if (messages.length > 1) setHint('')
@@ -104,6 +111,15 @@ export default function ChatWidget() {
     launcherRef.current?.focus()
   }
 
+  function resetChat() {
+    requestRef.current += 1
+    setPending(false)
+    setDraft('')
+    setHint('')
+    setMessages([{ id: 'greeting', role: 'assistant', text: GREETING, suggestions: QUICK_PROMPTS }])
+    inputRef.current?.focus()
+  }
+
   function send(raw) {
     const text = raw.trim()
     if (!text) {
@@ -115,28 +131,35 @@ export default function ChatWidget() {
       setHint('Please keep the message under 500 characters.')
       return
     }
+    const requestId = requestRef.current + 1
+    requestRef.current = requestId
     setHint('')
     setDraft('')
     stickToEnd.current = true
+    setPending(true)
     setMessages((current) => [...current, { id: nextId(), role: 'user', text }])
-    try {
-      const result = answerQuestion(text)
-      setMessages((current) => [
-        ...current,
-        { id: nextId(), role: 'assistant', text: result.text, suggestions: result.suggestions },
-      ])
-    } catch {
-      setMessages((current) => [
-        ...current,
-        {
-          id: nextId(),
-          role: 'assistant',
-          text: 'Something went wrong while looking that up.',
-          error: true,
-          retry: text,
-        },
-      ])
-    }
+    window.setTimeout(() => {
+      if (requestRef.current !== requestId) return
+      setPending(false)
+      try {
+        const result = answerQuestion(text)
+        setMessages((current) => [
+          ...current,
+          { id: nextId(), role: 'assistant', text: result.text, suggestions: result.suggestions },
+        ])
+      } catch {
+        setMessages((current) => [
+          ...current,
+          {
+            id: nextId(),
+            role: 'assistant',
+            text: 'Something went wrong while looking that up.',
+            error: true,
+            retry: text,
+          },
+        ])
+      }
+    }, 280)
   }
 
   function onKeyDown(event) {
@@ -162,17 +185,28 @@ export default function ChatWidget() {
               </h2>
               <p className="mt-0.5 text-xs text-ink-muted">Answers from this site, not a live model</p>
             </div>
-            <button
-              type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink hover:bg-hover"
-              aria-label="Close portfolio assistant"
-              onClick={closePanel}
-            >
-              <FiX aria-hidden="true" />
-            </button>
+            <div className="flex shrink-0 gap-2">
+              <button
+                type="button"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink hover:bg-hover"
+                aria-label="Start a new conversation"
+                onClick={resetChat}
+              >
+                <FiRotateCcw aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink hover:bg-hover"
+                aria-label="Close portfolio assistant"
+                onClick={closePanel}
+              >
+                <FiX aria-hidden="true" />
+              </button>
+            </div>
           </header>
           <MessageList
             messages={messages}
+            pending={pending}
             onPick={send}
             onRetry={send}
             scrollerRef={scrollerRef}
@@ -203,7 +237,12 @@ export default function ChatWidget() {
                 }}
                 onKeyDown={onKeyDown}
               />
-              <button type="submit" className="btn-primary h-11 w-11 shrink-0 !px-0" aria-label="Send message">
+              <button
+                type="submit"
+                className="btn-primary h-11 w-11 shrink-0 !px-0 disabled:opacity-60"
+                aria-label="Send message"
+                disabled={pending}
+              >
                 <FiSend aria-hidden="true" />
               </button>
             </div>

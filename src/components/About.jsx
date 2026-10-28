@@ -5,7 +5,7 @@ export default function About() {
   const ref = useScrollAnimation()
 
   return (
-    <section id="about" className="scroll-mt-20 py-20 md:py-28">
+    <section id="about" className="scroll-mt-20 page-section">
       <div className="section-container" ref={ref}>
         <div className="grid items-start gap-10 lg:grid-cols-[1.4fr_0.8fr] lg:gap-16">
           <div>

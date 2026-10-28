@@ -25,9 +25,9 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" className="scroll-mt-20 py-20 md:py-28">
+    <section id="contact" className="scroll-mt-20 page-section">
       <div className="section-container" ref={ref}>
-        <div className="animate-on-scroll rounded-[28px] border border-line bg-card px-6 py-10 shadow-card sm:px-10 sm:py-14">
+        <div className="reading-surface animate-on-scroll rounded-[28px] border border-line px-6 py-10 shadow-card sm:px-10 sm:py-14">
           <p className="section-kicker">Contact</p>
           <h2 className="section-title max-w-2xl">Have a project in mind or want to talk about technology?</h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-muted">

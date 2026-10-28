@@ -8,7 +8,7 @@ export default function Achievements() {
   const ref = useScrollAnimation()
 
   return (
-    <section id="achievements" className="scroll-mt-20 bg-wash py-20 md:py-28">
+    <section id="achievements" className="scroll-mt-20 page-section">
       <div className="section-container" ref={ref}>
         <p className="section-kicker animate-on-scroll">Achievements</p>
         <h2 className="section-title animate-on-scroll">A few things worth mentioning.</h2>

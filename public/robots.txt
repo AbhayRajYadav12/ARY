@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# No canonical domain is configured, so this file does not point at a sitemap.

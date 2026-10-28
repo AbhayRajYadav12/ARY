@@ -5,7 +5,7 @@ export default function Education() {
   const ref = useScrollAnimation()
 
   return (
-    <section id="education" className="scroll-mt-20 py-20 md:py-28">
+    <section id="education" className="scroll-mt-20 page-section">
       <div className="section-container" ref={ref}>
         <p className="section-kicker animate-on-scroll">Education</p>
         <h2 className="section-title animate-on-scroll">Where I studied.</h2>

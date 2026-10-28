@@ -4,6 +4,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { personal } from '../utils/data'
 
 const navLinks = [
+  { label: 'Home', to: 'hero' },
   { label: 'About', to: 'about' },
   { label: 'Experience', to: 'experience' },
   { label: 'Projects', to: 'projects' },
@@ -78,7 +79,11 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href={personal.resume} target="_blank" rel="noopener noreferrer" className="btn-primary !px-4 !py-2 text-[13px]">
+          <a
+            href={personal.resume}
+            download="Abhay-Raj-Yadav-Resume.pdf"
+            className="btn-primary !px-4 !py-2 text-[13px]"
+          >
             Resume
           </a>
           <button

@@ -38,7 +38,9 @@ npm run preview
 - A resume button that opens `public/Abhay-Raj-Yadav-Resume.pdf`
 - A portfolio assistant fixed to the bottom-right corner
 
-The assistant matches questions against the portfolio data. It covers studies, the Micromatic internship, Niriksha, PDF-Summary AI, DemandRadar, skills, and contact details. If a question is not in that material, it says so.
+The assistant matches questions against the portfolio data. It covers studies, the Micromatic internship, Niriksha, PDF-Summary AI, DemandRadar, skills, and contact details. If a question is not in that material, it says so. It is not connected to an external model, and the header says so. The reset control starts a new conversation.
+
+The hero includes a CSS 3D arrangement of the three resume projects. It follows the pointer and does not use WebGL. With reduced motion, the same cards stack in a static column. Three.js is not a dependency.
 
 ## Project structure
 

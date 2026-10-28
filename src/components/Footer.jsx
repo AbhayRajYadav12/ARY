@@ -25,7 +25,7 @@ export default function Footer() {
             </a>
           </li>
           <li>
-            <a href={personal.resume} target="_blank" rel="noopener noreferrer" className="text-ink-muted hover:text-blue-link">
+            <a href={personal.resume} download="Abhay-Raj-Yadav-Resume.pdf" className="text-ink-muted hover:text-blue-link">
               Resume
             </a>
           </li>

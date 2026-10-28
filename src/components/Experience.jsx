@@ -5,7 +5,7 @@ export default function Experience() {
   const ref = useScrollAnimation()
 
   return (
-    <section id="experience" className="scroll-mt-20 bg-wash py-20 md:py-28">
+    <section id="experience" className="scroll-mt-20 page-section">
       <div className="section-container" ref={ref}>
         <p className="section-kicker animate-on-scroll">Experience</p>
         <h2 className="section-title animate-on-scroll">Where I’ve been building.</h2>
