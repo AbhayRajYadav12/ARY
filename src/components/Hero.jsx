@@ -1,12 +1,80 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-scroll'
 import { FiArrowDown, FiArrowRight, FiDownload, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import { highlights, personal, status } from '../utils/data'
 import profileImg from '../assets/profile.jpg'
 import HeroScene from './hero/HeroScene'
 
+const ROAM_SPOTS = [
+  [0.04, 0.02],
+  [0.4, 0],
+  [0.78, 0.04],
+  [0.02, 0.38],
+  [0.42, 0.42],
+  [0.76, 0.36],
+  [0.06, 0.74],
+  [0.4, 0.78],
+  [0.74, 0.7],
+]
+
 export default function Hero() {
   const [photoFailed, setPhotoFailed] = useState(false)
+  const [roaming, setRoaming] = useState(false)
+  const [origin, setOrigin] = useState(null)
+  const [portraitShift, setPortraitShift] = useState('')
+  const portraitRef = useRef(null)
+  const roamingRef = useRef(false)
+  const deckRef = useRef([])
+  const returnTimer = useRef(0)
+
+  const nextShift = () => {
+    const anchor = portraitRef.current
+    if (!anchor) return ''
+    const box = anchor.getBoundingClientRect()
+    const margin = 16
+    const minTop = 80
+    const travelX = Math.max(0, window.innerWidth - box.width - margin * 2)
+    const travelY = Math.max(0, window.innerHeight - box.height - minTop - margin)
+    if (deckRef.current.length === 0) {
+      deckRef.current = ROAM_SPOTS.map((_, index) => index).sort(() => Math.random() - 0.5)
+    }
+    const [fx, fy] = ROAM_SPOTS[deckRef.current.pop()]
+    const left = margin + fx * travelX
+    const top = minTop + fy * travelY
+    return `translate3d(${left - box.left}px, ${top - box.top}px, 0)`
+  }
+
+  const startWander = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const anchor = portraitRef.current
+    if (!anchor) return
+    window.clearTimeout(returnTimer.current)
+    const box = anchor.getBoundingClientRect()
+    setOrigin({ top: box.top, left: box.left })
+    roamingRef.current = true
+    setRoaming(true)
+    const shift = nextShift()
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        if (!roamingRef.current) return
+        setPortraitShift(shift)
+      })
+    })
+  }
+
+  const stopWander = () => {
+    roamingRef.current = false
+    setPortraitShift('')
+    returnTimer.current = window.setTimeout(() => {
+      if (roamingRef.current) return
+      setRoaming(false)
+      setOrigin(null)
+    }, 2700)
+  }
+
+  useEffect(() => {
+    return () => window.clearTimeout(returnTimer.current)
+  }, [])
 
   return (
     <section id="hero" className="px-4 pb-6 pt-6 sm:px-6 lg:px-8">
@@ -63,23 +131,40 @@ export default function Hero() {
             <div className="relative h-72 sm:h-80 lg:h-[26rem]">
               <HeroScene />
             </div>
-            <div className="mt-4 lg:pointer-events-none lg:absolute lg:bottom-3 lg:left-3 lg:mt-0">
-              {photoFailed ? (
-                <div
-                  className="flex h-36 w-28 items-center justify-center rounded-[50%] border border-line bg-wash text-xl font-semibold text-ink shadow-card sm:h-44 sm:w-36"
-                  role="img"
-                  aria-label="Portrait of Abhay Raj Yadav unavailable"
-                >
-                  ARY
-                </div>
-              ) : (
-                <img
-                  src={profileImg}
-                  alt="Portrait of Abhay Raj Yadav"
-                  className="h-36 w-28 rounded-[50%] border-4 border-card object-cover object-[center_30%] shadow-card sm:h-44 sm:w-36"
-                  onError={() => setPhotoFailed(true)}
-                />
-              )}
+            <div className="relative z-20 mt-4 w-fit lg:pointer-events-none lg:absolute lg:bottom-3 lg:left-3 lg:mt-0">
+              <div
+                ref={portraitRef}
+                className="pointer-events-auto h-40 w-32 sm:h-52 sm:w-40"
+                onMouseEnter={startWander}
+                onMouseLeave={stopWander}
+              >
+                {photoFailed ? (
+                  <div
+                    className={`hero-portrait flex h-40 w-32 items-center justify-center rounded-[50%] border border-line bg-wash text-xl font-semibold text-ink shadow-card sm:h-52 sm:w-40 ${roaming ? 'is-roaming' : ''}`}
+                    style={{
+                      transform: portraitShift || undefined,
+                      top: roaming && origin ? `${origin.top}px` : undefined,
+                      left: roaming && origin ? `${origin.left}px` : undefined,
+                    }}
+                    role="img"
+                    aria-label="Portrait of Abhay Raj Yadav unavailable"
+                  >
+                    ARY
+                  </div>
+                ) : (
+                  <img
+                    src={profileImg}
+                    alt="Portrait of Abhay Raj Yadav"
+                    className={`hero-portrait h-40 w-32 rounded-[50%] border-4 border-card object-cover object-[center_30%] shadow-card sm:h-52 sm:w-40 ${roaming ? 'is-roaming' : ''}`}
+                    style={{
+                      transform: portraitShift || undefined,
+                      top: roaming && origin ? `${origin.top}px` : undefined,
+                      left: roaming && origin ? `${origin.left}px` : undefined,
+                    }}
+                    onError={() => setPhotoFailed(true)}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

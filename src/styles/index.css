@@ -249,6 +249,18 @@
   transform: none;
 }
 
+.hero-portrait {
+  pointer-events: none;
+  transition: transform 2.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 2.6s ease;
+}
+
+.hero-portrait.is-roaming {
+  position: fixed;
+  z-index: 30;
+  margin: 0;
+  box-shadow: 0 22px 36px -18px rgba(41, 53, 47, 0.42);
+}
+
 .chat-pulse {
   animation: chat-pulse 2.4s ease-out infinite;
 }
@@ -282,7 +294,8 @@
     animation: none;
   }
 
-  .hero-rig {
+  .hero-rig,
+  .hero-portrait {
     transition: none;
   }
 }
